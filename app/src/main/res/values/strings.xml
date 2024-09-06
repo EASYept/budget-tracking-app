@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="roll">Roll</string>
+    <string name="affirmation1">Card1</string>
+    <string name="affirmation2">Card2</string>
+    <string name="affirmation3">Card3</string>
+    <string name="affirmation4">Card4</string>
+    <string name="affirmation5">Card5</string>
+    <string name="affirmation6">Card6</string>
+    <string name="affirmation7">Card7</string>
+    <string name="affirmation8">Card8</string>
+</resources>
