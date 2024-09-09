@@ -1,6 +1,7 @@
 package ru.cashwriter
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -17,8 +18,13 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,8 +35,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.cashwriter.apps.dice.DiceApp
+import androidx.core.content.ContextCompat.startActivity
 import ru.cashwriter.ui.theme.MyApplicationTheme
+
+private const val TAG = "MAIN ACTIVITY"
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,25 +47,48 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                val layoutDirection = LocalLayoutDirection.current
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .statusBarsPadding()
-                        .padding(
-                            start = WindowInsets.safeDrawing
-                                .asPaddingValues()
-                                .calculateStartPadding(layoutDirection),
-                            end = WindowInsets.safeDrawing
-                                .asPaddingValues()
-                                .calculateEndPadding(layoutDirection),
-                        ),
-                ) {
-                    DiceApp()
-                }
+                App()
             }
 
         }
+    }
+
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun App() {
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        floatingActionButton = { PlusButton() },
+        content = { padding ->
+            ScrollableApp()
+        }
+    )
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun TableOfContent() {
+//    TODO
+    CardList()
+}
+
+@Composable
+fun PlusButton() {
+    FloatingActionButton(
+        onClick = {
+            Log.d(TAG, "clicked")
+//            val intent = Intent()
+//                .setAction(Intent.ACTION_VIEW)
+//                .setData(Uri.parse())
+            startActivity(this, intent)
+        },
+    ) {
+        Icon(Icons.Filled.Add, "Floating action button.")
     }
 }
 

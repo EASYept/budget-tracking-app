@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.cashwriter.R
-import java.util.Optional
 
 @Preview(showBackground = true)
 @Composable
