@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -25,7 +24,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,40 +33,44 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
-import ru.cashwriter.ui.theme.MyApplicationTheme
 
 private const val TAG = "MAIN ACTIVITY"
 
 
 class MainActivity : ComponentActivity() {
+
+//    lateinit var binding: ActivityMainBinding
+//    private val fillData: FillData by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
-            MyApplicationTheme {
-                App()
-            }
-
+            TodoNavGraph()
         }
+
+//        binding = ActivityMainBinding.inflate(layoutInflater)
+
+//        setContentView(R.layout.activity_main)
+//        val supportFragmentManager: FragmentManager = supportFragmentManager
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.place_holder, TableFragment.newInstance())
+//            .commit()
     }
 
 }
 
-
-@Preview(showBackground = true)
 @Composable
-fun App() {
+fun TableScreen(actions: AppNavigationActions) {
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
-        floatingActionButton = { PlusButton() },
-        content = { padding ->
-            ScrollableApp()
-        }
-    )
+        floatingActionButton = { PlusButton {
+            Log.d(TAG, "TableScreen button clicked")
+            actions.navigateToFillForm() } }
+    ) { padding ->
+        TableOfContent()
+    }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -78,18 +80,16 @@ fun TableOfContent() {
 }
 
 @Composable
-fun PlusButton() {
+fun PlusButton(function: () -> Unit) {
     FloatingActionButton(
-        onClick = {
-            Log.d(TAG, "clicked")
-//            val intent = Intent()
-//                .setAction(Intent.ACTION_VIEW)
-//                .setData(Uri.parse())
-            startActivity(this, intent)
-        },
+        onClick = function,
     ) {
         Icon(Icons.Filled.Add, "Floating action button.")
     }
+}
+
+fun function(): () -> Unit = {
+    Log.d(TAG, "clicked")
 }
 
 @Preview(showBackground = true)
